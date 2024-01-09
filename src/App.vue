@@ -2,7 +2,7 @@
   <div>
     <Header></Header>
     <router-view></router-view>
-    <Footer></Footer>
+    <Footer v-show="$route.meta.footerShow"></Footer>
   </div>
 </template>
 
@@ -12,9 +12,10 @@
 
   export default {
     name: "App",
+    computed: {},
     components: {
       Header,
-      Footer
+      Footer,
     },
   }
 </script>

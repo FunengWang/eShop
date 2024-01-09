@@ -5,6 +5,12 @@
 <script>
   export default {
     name: "Search",
+    computed:{
+      keyword(){
+        return this.$route.params.keyword
+      }
+    },
+    props:[]
   }
 </script>
 

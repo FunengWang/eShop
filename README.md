@@ -39,10 +39,13 @@ vue-router
 
 
 
+# Footer组件显示与隐藏 ：v-show
+  在Home、Search组件打开时显示
+  在Login、Register组件打开时隐藏
+  配置路由Meta信息，实现Footer的显示与隐藏
 
 
-
-
+# 声明式路由与函数式路由的区别
 
 
 
