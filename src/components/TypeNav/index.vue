@@ -16,18 +16,34 @@
       <div class="sort">
         <div class="all-sort-list2">
           <div class="item" v-for="c1 in categoryList" :key="c1.id">
-            <h3 @mouseenter="getChildCategoryList(c1.id)">
+            <h3 @mouseenter.once="getChildCategoryList(c1.id)">
               <a href="">{{ c1.name }}</a>
             </h3>
             <div class="item-list clearfix">
-              <div class="subitem" v-for="c2 in categoryList2" :key="c2.id">
+              <div
+                class="subitem"
+                v-for="c2 in c1.childCategories"
+                :key="c2.id"
+              >
                 <dl class="fore">
-                  <dt @mouseenter="getGrandChildCategoryList(c2.id)">
+                  <dt>
                     <a href="">{{ c2.name }}</a>
                   </dt>
                   <dd>
-                    <em v-for="c3 in categoryList3" :key="c3.id">
-                      <a href="">{{ c3.name }}</a>
+                    <em>
+                      <a href="">音乐</a>
+                    </em>
+                    <em>
+                      <a href="">影视</a>
+                    </em>
+                    <em>
+                      <a href="">教育</a>
+                    </em>
+                    <em>
+                      <a href="">音像</a>
+                    </em>
+                      <em>
+                      <a href="">游戏</a>
                     </em>
                   </dd>
                 </dl>
@@ -51,16 +67,11 @@
           let list = state.home.categoryList
           return list.length >= 17 ? list.slice(0, 16) : list
         },
-        categoryList2: (state) => state.home.categoryList2,
-        categoryList3: (state) => state.home.categoryList3,
       }),
     },
     methods: {
       getChildCategoryList(id) {
         this.$store.dispatch("categoryList2", id)
-      },
-      getGrandChildCategoryList(id) {
-        this.$store.dispatch("categoryList3", id)
       },
     },
     mounted() {
@@ -184,11 +195,9 @@
                 display: block;
               }
             }
-
-
           }
 
-          .item:hover{
+          .item:hover {
             background-color: skyblue;
           }
         }

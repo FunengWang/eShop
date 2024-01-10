@@ -1,9 +1,8 @@
 import { getCategoryList, getCategoryList2, getCategoryList3 } from '@/api'
+import Vue from 'vue'
 
 const state = {
-    categoryList: [],
-    categoryList2: [],
-    categoryList3: [],
+    categoryList: []
 }
 
 const actions = {
@@ -21,12 +20,6 @@ const actions = {
         }
     },
 
-    async categoryList3(context, id) {
-        let result = await getCategoryList3(id)
-        if (result.code == 200) {
-            context.commit('CATEGORYLIST3', result.data)
-        }
-    }
 }
 
 const mutations = {
@@ -34,11 +27,11 @@ const mutations = {
         state.categoryList = data
     },
     CATEGORYLIST2(state, data) {
-        state.categoryList2 = data
-    },
-    CATEGORYLIST3(state, data) {
-        state.categoryList3 = data
+        let id = data[0].category1Id
+        let category = state.categoryList[id - 1]
+        Vue.set(category, 'childCategories', data)
     }
+  
 }
 
 const getters = {}
