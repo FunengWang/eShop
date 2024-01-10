@@ -2,7 +2,9 @@
   <!-- 商品分类导航 -->
   <div class="type-nav">
     <div class="container">
-      <h2 class="all">全部商品分类</h2>
+      <h2 @mouseenter="enterShow" @mouseleave="leaveShow" class="all">
+        全部商品分类
+      </h2>
       <nav class="nav">
         <a href="###">服装城</a>
         <a href="###">美妆馆</a>
@@ -13,45 +15,45 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort">
-        <div class="all-sort-list2">
-          <div class="item" v-for="c1 in categoryList" :key="c1.id">
-            <h3 @mouseenter.once="getChildCategoryList(c1.id)">
-              <a href="">{{ c1.name }}</a>
-            </h3>
-            <div class="item-list clearfix">
-              <div
-                class="subitem"
-                v-for="c2 in c1.childCategories"
-                :key="c2.id"
-              >
-                <dl class="fore">
-                  <dt>
-                    <a href="">{{ c2.name }}</a>
-                  </dt>
-                  <dd>
-                    <em>
-                      <a href="">音乐</a>
-                    </em>
-                    <em>
-                      <a href="">影视</a>
-                    </em>
-                    <em>
-                      <a href="">教育</a>
-                    </em>
-                    <em>
-                      <a href="">音像</a>
-                    </em>
-                      <em>
-                      <a href="">游戏</a>
-                    </em>
-                  </dd>
-                </dl>
+      <transition name="sort">
+        <div class="sort" v-show="show">
+          <div class="all-sort-list2" @click="routeToSearch">
+            <div class="item" v-for="c1 in categoryList" :key="c1.id">
+              <h3 @mouseenter.once="getChildCategoryList(c1.id)">
+                <a :data-category-name="c1.name" :data-category1-id="c1.id">{{
+                  c1.name
+                }}</a>
+              </h3>
+              <div class="item-list clearfix">
+                <div
+                  class="subitem"
+                  v-for="c2 in c1.childCategories"
+                  :key="c2.id"
+                >
+                  <dl class="fore">
+                    <dt>
+                      <a
+                        :data-category-name="c2.name"
+                        :data-category2-id="c2.id"
+                        >{{ c2.name }}</a
+                      >
+                    </dt>
+                    <dd>
+                      <em v-for="c3 in c2.childCategories" :key="c3.id">
+                        <a
+                          :data-category-name="c3.name"
+                          :data-category3-id="c2.id"
+                          >{{ c3.name }}</a
+                        >
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -61,6 +63,11 @@
 
   export default {
     name: "TypeNav",
+    data() {
+      return {
+        show: true,
+      }
+    },
     computed: {
       ...mapState({
         categoryList: (state) => {
@@ -73,10 +80,40 @@
       getChildCategoryList(id) {
         this.$store.dispatch("categoryList2", id)
       },
+      routeToSearch(event) {
+        let { categoryName, category1Id, category2Id, category3Id } =
+          event.target.dataset
+        if (categoryName) {
+          let location = { name: "Search" }
+          let query = { categoryName: categoryName }
+          if (category1Id) {
+            query.category1Id = category1Id
+          } else if (category2Id) {
+            query.category2Id = category2Id
+          } else {
+            query.category3Id = category3Id
+          }
+          location.query = query
+          if(this.$route.params){
+            location.params = this.$route.params
+          }
+          this.$router.push(location)
+        }
+      },
+      enterShow() {
+        this.show = true
+      },
+      leaveShow() {
+        if (this.$route.path != "/home") {
+          this.show = false
+        }
+      },
     },
     mounted() {
-      this.$store.dispatch("categoryList")
-    },
+      if (this.$route.path != "/home") {
+        this.show = false
+      }
+    }
   }
 </script>
 
@@ -116,7 +153,7 @@
         left: 0;
         top: 45px;
         width: 210px;
-        height: 461px;
+        height: 481px;
         position: absolute;
         background: #fafafa;
         z-index: 999;
@@ -201,6 +238,19 @@
             background-color: skyblue;
           }
         }
+      }
+
+      //过度动画的样式
+      .sort-enter {
+        height: 0px;
+      }
+
+      .sort-enter-to {
+        height: 481px;
+      }
+
+      .sort-enter-active {
+        transition: all .5s linear;
       }
     }
   }

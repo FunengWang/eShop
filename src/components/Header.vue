@@ -62,12 +62,11 @@
     },
     methods: {
       routetoSearch() {
-        this.$router.push(
-          {
+        this.$router.push({
             name: "Search",
-            params: { keyword: this.keyword },
-          }
-        )
+            params: { keyword: this.keyword || undefined},
+            query: this.$route.query
+        })
       },
     },
   }

@@ -3,7 +3,8 @@ import App from './App.vue'
 import router from './router'
 import TypeNav from './components/TypeNav'
 import store from './store'
-
+import Mock from './mock/mockServe'
+import 'swiper/css/swiper.css'
 
 Vue.config.productionTip = false
 //register a global component

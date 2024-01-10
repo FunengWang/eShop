@@ -1,31 +1,24 @@
 //当前这个模块，API进行统一管理
-import requests from "./request"
+import requests from './request'
+import mockRequest from './mockAjax'
 
-//三级联动接口
-//http://39.98.123.211:8510/admin/product/getCategory1
-//http:39.98.123.211:8510/admin/product/getCategory2/{{id}}
-//http://39.98.123.211:8510/admin/product/getCategory3/2
-
-const getCategoryList = () => {
-    return requests({
-        url: '/product/getCategory1',
-        method: 'get'
-    })
-}
+const getCategoryList = () => requests.get('/product/getCategory1')
 
 const getCategoryList2 = (id) => {
-    return requests({
-        url: '/product/getCategory2/' + id,
-        method: 'get'
-    })
+  return requests({
+    url: '/product/getCategory2/' + id,
+    method: 'get',
+  })
 }
 
 const getCategoryList3 = (id) => {
-    return requests({
-        url: '/product/getCategory3/' + id,
-        method: 'get'
-    })
+  return requests({
+    url: '/product/getCategory3/' + id,
+    method: 'get',
+  })
 }
 
-export { getCategoryList, getCategoryList2, getCategoryList3 }
+//获取首页轮播图的接口
+const getBannerList = () => mockRequest.get('/banner')
 
+export { getCategoryList, getCategoryList2, getCategoryList3, getBannerList }

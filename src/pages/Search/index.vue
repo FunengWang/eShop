@@ -1,14 +1,16 @@
 <template>
+<div>
+  <TypeNav/>
   <h2>Search Component</h2>
+</div>
+
 </template>
 
 <script>
   export default {
     name: "Search",
     computed:{
-      keyword(){
-        return this.$route.params.keyword
-      }
+    
     },
     props:[]
   }
