@@ -18,32 +18,34 @@
       <transition name="sort">
         <div class="sort" v-show="show">
           <div class="all-sort-list2" @click="routeToSearch">
-            <div class="item" v-for="c1 in categoryList" :key="c1.id">
-              <h3 @mouseenter.once="getChildCategoryList(c1.id)">
-                <a :data-category-name="c1.name" :data-category1-id="c1.id">{{
-                  c1.name
-                }}</a>
+            <div class="item" v-for="c1 in categoryList" :key="c1.categoryId">
+              <h3>
+                <a
+                  :data-category-name="c1.categoryName"
+                  :data-category1-id="c1.categoryId"
+                  >{{ c1.categoryName }}</a
+                >
               </h3>
               <div class="item-list clearfix">
                 <div
                   class="subitem"
-                  v-for="c2 in c1.childCategories"
-                  :key="c2.id"
+                  v-for="c2 in c1.categoryChild"
+                  :key="c2.categoryId"
                 >
                   <dl class="fore">
                     <dt>
                       <a
-                        :data-category-name="c2.name"
-                        :data-category2-id="c2.id"
-                        >{{ c2.name }}</a
+                        :data-category-name="c2.categoryName"
+                        :data-category2-id="c2.categoryId"
+                        >{{ c2.categoryName }}</a
                       >
                     </dt>
                     <dd>
-                      <em v-for="c3 in c2.childCategories" :key="c3.id">
+                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
                         <a
-                          :data-category-name="c3.name"
-                          :data-category3-id="c2.id"
-                          >{{ c3.name }}</a
+                          :data-category-name="c3.categoryName"
+                          :data-category3-id="c2.categoryId"
+                          >{{ c3.categoryName }}</a
                         >
                       </em>
                     </dd>
@@ -70,16 +72,10 @@
     },
     computed: {
       ...mapState({
-        categoryList: (state) => {
-          let list = state.home.categoryList
-          return list.length >= 17 ? list.slice(0, 16) : list
-        },
+        categoryList: (state) => state.home.categoryList,
       }),
     },
     methods: {
-      getChildCategoryList(id) {
-        this.$store.dispatch("categoryList2", id)
-      },
       routeToSearch(event) {
         let { categoryName, category1Id, category2Id, category3Id } =
           event.target.dataset
@@ -94,7 +90,7 @@
             query.category3Id = category3Id
           }
           location.query = query
-          if(this.$route.params){
+          if (this.$route.params) {
             location.params = this.$route.params
           }
           this.$router.push(location)
@@ -113,7 +109,7 @@
       if (this.$route.path != "/home") {
         this.show = false
       }
-    }
+    },
   }
 </script>
 
@@ -153,7 +149,7 @@
         left: 0;
         top: 45px;
         width: 210px;
-        height: 481px;
+        height: 461px;
         position: absolute;
         background: #fafafa;
         z-index: 999;
@@ -161,7 +157,7 @@
         .all-sort-list2 {
           .item {
             h3 {
-              line-height: 30px;
+              line-height: 27px;
               font-size: 14px;
               font-weight: 400;
               overflow: hidden;
@@ -250,7 +246,7 @@
       }
 
       .sort-enter-active {
-        transition: all .5s linear;
+        transition: all 0.5s linear;
       }
     }
   }
