@@ -1,7 +1,7 @@
 import { getSearchInfoList } from '@/api'
 
 const state = {
-  searchInfoList: [],
+  searchInfo: {},
 }
 const actions = {
   async searchInfoList(context, params = {}) {
@@ -13,11 +13,22 @@ const actions = {
 }
 const mutations = {
   SEARCHINFOLIST(state, data) {
-    state.searchInfoList = data
+    state.searchInfo = data
   },
 }
 
-const getters = {}
+const getters = {
+  goodList(state) {
+    return state.searchInfo.goodsList || []
+  },
+  trademarkList(state) {
+    return state.searchInfo.trademarkList || []
+  },
+  attrsList(state) {
+    return state.searchInfo.attrsList || []
+  }
+}
+
 export default {
   actions,
   mutations,

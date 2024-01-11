@@ -69,6 +69,12 @@
         })
       },
     },
+    mounted(){
+      //通过全局时间总线清楚keyword
+      this.$bus.$on("clearKeyword",()=>{
+        this.keyword = ""
+      })
+    }
   }
 </script>
 

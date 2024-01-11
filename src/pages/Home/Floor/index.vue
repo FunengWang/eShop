@@ -31,26 +31,27 @@
               <!-- 轮播图组件 -->
               <Carousel :list="floor.carouseList"></Carousel>
             </div>
-            <!-- <div class="split">
+            <div class="split">
               <span class="floor-x-line"></span>
-              <div
-                class="floor-conver-pit"
-                v-for="(recommend, index) in floor.recommendList"
-                :key="index"
-              >
-                <img :src="recommend" />
+              <div class="floor-conver-pit">
+                <img :src="floor.recommendList[0]" />
               </div>
-            </div> -->
+              <div class="floor-conver-pit">
+                <img :src="floor.recommendList[1]" />
+              </div>
+            </div>
             <div class="split center">
               <img :src="floor.bigImg" />
             </div>
-            <!-- <div
-              class="floor-conver-pit"
-              v-for="(recommend, index) in floor.recommendList"
-              :key="index"
-            >
-              <img :src="recommend" />
-            </div> -->
+            <div class="split">
+              <span class="floor-x-line"></span>
+              <div class="floor-conver-pit">
+                <img :src="floor.recommendList[2]" />
+              </div>
+              <div class="floor-conver-pit">
+                <img :src="floor.recommendList[3]" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -59,11 +60,10 @@
 </template>
 
 <script>
-
   export default {
     name: "Floor",
     props: ["floor"],
-    mounted() {}
+    mounted() {},
   }
 </script>
 

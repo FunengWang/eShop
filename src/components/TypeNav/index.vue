@@ -16,7 +16,12 @@
         <a href="###">秒杀</a>
       </nav>
       <transition name="sort">
-        <div class="sort" v-show="show">
+        <div
+          class="sort"
+          v-show="show"
+          @mouseenter="enterShow"
+          @mouseleave="leaveShow"
+        >
           <div class="all-sort-list2" @click="routeToSearch">
             <div class="item" v-for="c1 in categoryList" :key="c1.categoryId">
               <h3>
