@@ -1,4 +1,4 @@
-import { getGoodsInfoList } from '@/api'
+import { getGoodsInfoList, reqAddorUpdateCart } from '@/api'
 
 const state = {
   goodInfo: {},
@@ -9,6 +9,15 @@ const actions = {
     let result = await getGoodsInfoList(skuId)
     if (result.code == 200) {
       context.commit('GOODINFOLIST', result.data)
+    }
+  },
+
+  async addOrUpdateCart(context, { skuid, skuNum }) {
+    let result = await reqAddorUpdateCart(skuid, skuNum)
+    if (result.code == 200) {
+      return "ok"
+    } else {
+      Promise.reject(new Error('Failed'))
     }
   },
 }
