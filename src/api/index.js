@@ -18,4 +18,11 @@ const getSearchInfoList = (params) =>
     data: params,
   })
 
-export { getCategoryList, getBannerList, getFloorList, getSearchInfoList }
+//获取产品详情的接口
+const getGoodsInfoList = (skuId) =>
+  requests({
+    url: `/item/${skuId}`,
+    method: 'get',
+  })
+
+export { getCategoryList, getBannerList, getFloorList, getSearchInfoList, getGoodsInfoList }
