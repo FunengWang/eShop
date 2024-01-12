@@ -26,7 +26,10 @@ const getters = {
   },
   attrsList(state) {
     return state.searchInfo.attrsList || []
-  }
+  },
+  total() {
+    return state.searchInfo.total
+  },
 }
 
 export default {
