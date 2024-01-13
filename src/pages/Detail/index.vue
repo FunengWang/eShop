@@ -115,7 +115,7 @@
                 >
               </div>
               <div class="add" @click="addToCart">
-                <a href="javascript:">加入购物车</a>
+                <a>加入购物车</a>
               </div>
             </div>
           </div>
@@ -389,9 +389,18 @@
         try {
           await this.$store.dispatch("addOrUpdateCart", {
             skuNum: this.skuNum,
-            skuid: this.$route.params.skuid,
+            skuId: this.$route.params.skuid,
           })
-          //路由跳转
+          /**
+           * 路由跳转,
+           * 简单数据通过query传参
+           * 复杂数据通过会话存储(不持久化，会话结束后数据消失)
+           */
+          sessionStorage.setItem('SKUINFO',JSON.stringify(this.skuInfo))
+          this.$router.push({
+            name: "AddCartSuccess",
+            query: {skuNum: this.skuNum },
+          })
         } catch (error) {
           alert(error.message)
         }

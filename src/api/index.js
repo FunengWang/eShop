@@ -27,13 +27,24 @@ const getGoodsInfoList = (skuId) =>
 
 //将产品添加到购物车中或者更新
 // /api/cart/addToCart/{skuId}/{skuNum]} POST
-const reqAddorUpdateCart = (skuId,skuNum) =>
+const reqAddorUpdateCart = (skuId, skuNum) =>
   requests({
-    url: `cart/addToCart/${skuId}/${skuNum}`,
+    url: `/cart/addToCart/${skuId}/${skuNum}`,
     method: 'post',
   })
 
+const getShopCartList = () =>
+  requests({
+    url: '/cart/cartList',
+    method: 'get',
+  })
+
 export {
-  getCategoryList, getBannerList, getFloorList,
-  getSearchInfoList, getGoodsInfoList, reqAddorUpdateCart
+  getCategoryList,
+  getBannerList,
+  getFloorList,
+  getSearchInfoList,
+  getGoodsInfoList,
+  reqAddorUpdateCart,
+  getShopCartList,
 }

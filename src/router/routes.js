@@ -3,8 +3,27 @@ import Login from '@/pages/Login'
 import Search from '@/pages/Search'
 import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
+import AddCartSuccess from '@/pages/AddCartSuccess'
+import ShopCart from '@/pages/ShopCart'
+
 
 export default [
+  {
+    path: '/shopcart',
+    name: 'ShopCart',
+    component: ShopCart,
+    meta: {
+      footerShow: true,
+    },
+  },
+  {
+    path: '/addCartSuccess',
+    name: 'AddCartSuccess',
+    component: AddCartSuccess,
+    meta: {
+      footerShow: true,
+    },
+  },
   {
     path: '/home',
     component: Home,
@@ -41,7 +60,6 @@ export default [
       footerShow: false,
     },
   },
-
   {
     //重定向，在项目运行起来后，访问/，立马定向到首页
     path: '*',

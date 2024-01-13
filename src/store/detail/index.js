@@ -1,7 +1,10 @@
 import { getGoodsInfoList, reqAddorUpdateCart } from '@/api'
+import { getUUID } from '@/utils/uuid_token'
 
 const state = {
   goodInfo: {},
+  //游客的临时身份
+  uuid_token: getUUID(),
 }
 
 const actions = {
@@ -12,10 +15,10 @@ const actions = {
     }
   },
 
-  async addOrUpdateCart(context, { skuid, skuNum }) {
-    let result = await reqAddorUpdateCart(skuid, skuNum)
+  async addOrUpdateCart(context, { skuId, skuNum }) {
+    let result = await reqAddorUpdateCart(skuId, skuNum)
     if (result.code == 200) {
-      return "ok"
+      return 'ok'
     } else {
       Promise.reject(new Error('Failed'))
     }
