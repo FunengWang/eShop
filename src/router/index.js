@@ -42,11 +42,11 @@ let router = new VueRouter({
 })
 
 //全局前置路由守卫
-router.beforeEach(async (to, from, next) =>  {
+router.beforeEach(async (to, from, next) => {
   let token = store.state.user.token
   let name = store.state.user.userInfo.name
   if (token) {
-    //用户已经登录 
+    //用户已经登录
     if (to.path == '/login') {
       //禁止回到login,停留在首页
       next('/home')
@@ -59,19 +59,15 @@ router.beforeEach(async (to, from, next) =>  {
           await store.dispatch('getUserInfo')
           next()
         } catch (error) {
-          //token 过期，重新获取
+          //token 过期，跳转到login
           await store.dispatch('userLogout')
           next('/login')
         }
       }
-     
     }
   } else {
     //未登录
-    // if (to.path == '/home' ||
-    //   to.path == '/search') {
-      next()
-    // }
+    next()
   }
 })
 

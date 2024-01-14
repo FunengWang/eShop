@@ -68,10 +68,10 @@
         <div class="chosed">已选择 <span>0</span>件商品</div>
         <div class="sumprice">
           <em>总价（不含运费） ：</em>
-          <i class="summoney">0</i>
+          <i class="summoney">{{sumMoney}}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <router-link class="sum-btn" to="/trade">结算</router-link>
         </div>
       </div>
     </div>
@@ -85,8 +85,15 @@
     name: "ShopCart",
     computed: {
       ...mapState({
-        cartInfoList: (state) => state.shopcart.cartInfoList,
+        cartInfoList: (state) => state.shopcart.cartInfoList || [],
       }),
+      sumMoney() {
+        return this.cartInfoList.reduce(
+          (accumulator, cartInfo) =>
+            accumulator + cartInfo.skuNum * cartInfo.skuPrice,
+          0
+        )
+      },
     },
     methods: {
       getData() {
@@ -108,7 +115,7 @@
             if (isNaN(newVal) || newVal < 1) {
               alert("请输入有效数字")
             } else {
-              offset = Math.ceil(newVal) - cartInfo.skuNum             
+              offset = Math.ceil(newVal) - cartInfo.skuNum
             }
             break
         }

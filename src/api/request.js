@@ -4,7 +4,6 @@ import axios from 'axios'
 import nProgress from 'nprogress'
 //引入进度条样式
 import 'nprogress/nprogress.css'
-import store from '@/store'
 
 const requests = axios.create({
   baseURL: '/api',

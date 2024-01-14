@@ -5,9 +5,35 @@ import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
-
+import Trade from '@/pages/Trade'
+import Pay from '@/pages/Pay'
+import PaySuccess from '@/pages/PaySuccess'
 
 export default [
+  {
+    path: '/paySuccess',
+    name: 'PaySuccess',
+    component: PaySuccess,
+    meta: {
+      footerShow: true,
+    },
+  },
+  {
+    path: '/pay',
+    name: 'Pay',
+    component: Pay,
+    meta: {
+      footerShow: true,
+    },
+  },
+  {
+    path: '/trade',
+    name: 'Trade',
+    component: Trade,
+    meta: {
+      footerShow: true,
+    },
+  },
   {
     path: '/shopcart',
     name: 'ShopCart',
