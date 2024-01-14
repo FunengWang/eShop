@@ -6,10 +6,14 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="!userName">
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
+          </p>
+          <p v-else>
+            <a>{{ userName }}</a>
+            <a class="register" @click="logout">退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -53,6 +57,7 @@
 </template>
 
 <script>
+  import { mapState } from "vuex"
   export default {
     name: "Header",
     data() {
@@ -60,21 +65,38 @@
         keyword: "",
       }
     },
+    computed: {
+      ...mapState({
+        userName: (state) => state.user.userInfo.name,
+      }),
+    },
     methods: {
       routetoSearch() {
         this.$router.push({
-            name: "Search",
-            params: { keyword: this.keyword || undefined},
-            query: this.$route.query
+          name: "Search",
+          params: { keyword: this.keyword || undefined },
+          query: this.$route.query,
         })
       },
+      async logout() {
+        /**
+         * 退出登录需要做的事
+         * 1. 清除项目当中的数据(userInfo,token)
+         * 2. 通知服务器清除token
+         */
+        try {
+          await this.$store.dispatch("userLogout")
+          //回到首页
+          this.$router.push("/home")
+        } catch (error) {}
+      },
     },
-    mounted(){
-      //通过全局时间总线清楚keyword
-      this.$bus.$on("clearKeyword",()=>{
+    mounted() {
+      //通过全局时间总线清除keyword
+      this.$bus.$on("clearKeyword", () => {
         this.keyword = ""
       })
-    }
+    },
   }
 </script>
 

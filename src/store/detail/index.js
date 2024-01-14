@@ -1,10 +1,7 @@
 import { getGoodsInfoList, reqAddorUpdateCart } from '@/api'
-import { getUUID } from '@/utils/uuid_token'
 
 const state = {
-  goodInfo: {},
-  //游客的临时身份
-  uuid_token: getUUID(),
+  goodInfo: {}
 }
 
 const actions = {

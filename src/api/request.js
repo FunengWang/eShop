@@ -13,9 +13,9 @@ const requests = axios.create({
 
 //请求拦截器
 requests.interceptors.request.use((config) => {
-  let uuid_token = store.state.detail.uuid_token
-  if (uuid_token) {
-    config.headers.userTempId = uuid_token
+  let token = sessionStorage.getItem('TOKEN')
+  if (token) {
+    config.headers.token = token
   }
   nProgress.start()
   return config
