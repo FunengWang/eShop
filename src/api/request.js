@@ -13,7 +13,7 @@ const requests = axios.create({
 
 //请求拦截器
 requests.interceptors.request.use((config) => {
-  let token = sessionStorage.getItem('TOKEN')
+  let token = localStorage.getItem('TOKEN')
   if (token) {
     config.headers.token = token
   }

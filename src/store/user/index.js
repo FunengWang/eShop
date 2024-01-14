@@ -1,11 +1,8 @@
-import {
-  reqGetPassCode, reqUserRegister,
-  reqUserLogin, reqGetUserInfo, reqLogOut
-} from '@/api'
+import { reqGetPassCode, reqUserRegister, reqUserLogin, reqGetUserInfo, reqLogOut } from '@/api'
 
 const state = {
   passcode: '',
-  token: sessionStorage.getItem('TOKEN'),
+  token: localStorage.getItem('TOKEN'),
   userInfo: {},
 }
 
@@ -16,6 +13,7 @@ const actions = {
       context.commit('PASSCODE', result.data)
     }
   },
+
   async registerUser(context, user) {
     let result = await reqUserRegister(user)
     if (result.code == 200) {
@@ -24,22 +22,28 @@ const actions = {
       return Promise.reject(new Error('Failed'))
     }
   },
+
   async userLogin(context, data) {
     let result = await reqUserLogin(data)
     if (result.code == 200) {
       context.commit('LOGIN', result.data.token)
-      sessionStorage.setItem('TOKEN', result.data.token)
+      localStorage.setItem('TOKEN', result.data.token)
       return 'ok'
     } else {
       return Promise.reject(new Error('Failed'))
     }
   },
+
   async getUserInfo(context) {
     let result = await reqGetUserInfo()
     if (result.code == 200) {
       context.commit('USERINFO', result.data)
+      return 'ok'
+    } else {
+      return Promise.reject(new Error('Failed'))
     }
   },
+
   async userLogout(context) {
     let result = await reqLogOut()
     if (result.code == 200) {
@@ -48,7 +52,7 @@ const actions = {
     } else {
       return Promise.reject(new Error('Failed'))
     }
-  }
+  },
 }
 
 const mutations = {
@@ -64,8 +68,8 @@ const mutations = {
   LOGOUT(state) {
     state.token = ''
     state.userInfo = {}
-    sessionStorage.removeItem('TOKEN')
-  }
+    localStorage.removeItem('TOKEN')
+  },
 }
 
 const getters = {}

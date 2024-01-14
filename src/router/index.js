@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router'
 import Vue from 'vue'
 import routes from './routes'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -32,10 +33,46 @@ VueRouter.prototype.replace = function (location, onComplete, onReject) {
   }
 }
 
-export default new VueRouter({
+let router = new VueRouter({
   routes,
   //控制路由跳转时，滚动条在最上方
   scrollBehavior(to, from, savedPosition) {
-    return {  y: 0 }
+    return { y: 0 }
   },
 })
+
+//全局前置路由守卫
+router.beforeEach(async (to, from, next) =>  {
+  let token = store.state.user.token
+  let name = store.state.user.userInfo.name
+  if (token) {
+    //用户已经登录 
+    if (to.path == '/login') {
+      //禁止回到login,停留在首页
+      next('/home')
+    } else {
+      //访问非login模块
+      if (name) {
+        next()
+      } else {
+        try {
+          await store.dispatch('getUserInfo')
+          next()
+        } catch (error) {
+          //token 过期，重新获取
+          await store.dispatch('userLogout')
+          next('/login')
+        }
+      }
+     
+    }
+  } else {
+    //未登录
+    // if (to.path == '/home' ||
+    //   to.path == '/search') {
+      next()
+    // }
+  }
+})
+
+export default router
