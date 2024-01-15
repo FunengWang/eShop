@@ -156,7 +156,6 @@
               //路由跳转
               this.$router.push("/paysuccess")
             }
-            console.log(result)
           }, 1000)
         }
       },

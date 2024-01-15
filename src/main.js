@@ -7,7 +7,11 @@ import Mock from './mock/mockServe'
 import 'swiper/css/swiper.css'
 import Carousel from '@/components/Carousel'
 import Pagination from '@/components/Pagination'
-import {MessageBox} from 'element-ui'
+import { MessageBox } from 'element-ui'
+import VueLazyload from 'vue-lazyload'
+import loading from '@/assets/loading.gif'
+
+
 
 Vue.config.productionTip = false
 //register a global component
@@ -17,6 +21,13 @@ Vue.component(Pagination.name, Pagination)
 
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
+
+Vue.use(VueLazyload,{
+  // preLoad: 1.3,
+  // error: errorimage,
+  loading: loading,
+  // attempt: 1
+})
 
 new Vue({
   render: (h) => h(App),

@@ -13,7 +13,10 @@ const actions = {
 }
 const mutations = {
   SHOPCARTLIST(state, data) {
-    state.cartInfoList = data[0].cartInfoList || []
+    if (data.length > 0) {
+      state.cartInfoList = data[0].cartInfoList
+    }
+  
   },
 }
 

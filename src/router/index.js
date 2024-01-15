@@ -66,8 +66,12 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
-    //未登录
-    next()
+    //未登录 不得访问以下component
+    if (to.path.indexOf('/trade') != -1 || to.path.indexOf('/pay') != -1 || to.path.indexOf('/center') != -1) {
+      next('/login?redirect=' + to.path)
+    } else {
+      next()
+    }
   }
 })
 

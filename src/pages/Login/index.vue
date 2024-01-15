@@ -92,9 +92,11 @@
             await this.$store.dispatch("userLogin", {
               phone: this.phone,
               password: this.password,
-            })           
+            })
           }
-          this.$router.push('/home')
+          //路由中如果有query参数，跳转到指定路径；若无query参数，跳转到home
+          let toPath = this.$route.query.redirect || "/home"
+          this.$router.push(toPath)
         } catch (error) {}
       },
     },
