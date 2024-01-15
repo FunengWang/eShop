@@ -10,39 +10,43 @@
       </h3>
       <div class="content">
         <label>手机号:</label>
-        <input type="text" placeholder="请输入你的手机号" v-model="phoneNo" />
-        <span class="error-msg">{{ errorMsg }}</span>
+        <input v-validate="{ required:true, regex:  /^1\d{10}$}/ }" name='phone' type="text" placeholder="请输入你的手机号" v-model="phoneNo" />
+        <span class="error-msg">{{ errors.first('phone') }}</span>
       </div>
       <div class="content">
         <label>验证码:</label>
-        <input type="text" placeholder="请输入验证码" v-model="passcode" />
+        <input  v-validate="{ required:true, regex:  /^\d{6}$}/ }" type="text" placeholder="请输入验证码" name="passcode" v-model="passcode" />
         <button style="width: 100px; height: 40px" @click="getPassCode">
-          获取验证吗
+          获取验证码
         </button>
-        <span class="error-msg">{{ errorMsg }}</span>
+        <span class="error-msg">{{ errors.first('passcode') }}</span>
       </div>
       <div class="content">
         <label>登录密码:</label>
         <input
+          v-validate="{ required:true}"
           type="password"
           placeholder="请输入你的登录密码"
+          name="password"
           v-model="password"
         />
-        <span class="error-msg">{{ errorMsg }}</span>
+        <span class="error-msg">{{ errors.first('password') }}</span>
       </div>
       <div class="content">
         <label>确认密码:</label>
         <input
+          v-validate="{is:password}"
           type="password"
           placeholder="请输入确认密码"
+           name="passwordConfirm"
           v-model="passwordConfirm"
         />
-        <span class="error-msg">{{ errorMsg }}</span>
+        <span class="error-msg">{{ errors.first('passwordConfirm') }}</span>
       </div>
       <div class="controls">
-        <input name="m1" type="checkbox" v-model="agreed" />
+        <input v-validate="'required'" name="isCheck" type="checkbox" v-model="agreed"  />
         <span>同意协议并注册《尚品汇用户协议》</span>
-        <span class="error-msg">{{ errorMsg }}</span>
+        <span class="error-msg">{{ errors.first('isCheck') }}</span>
       </div>
       <div class="btn">
         <button @click="register">完成注册</button>
@@ -78,7 +82,6 @@
         password: "",
         passwordConfirm: "",
         agreed: false,
-        errorMsg: "",
       }
     },
     methods: {
@@ -164,7 +167,7 @@
         }
 
         .error-msg {
-          display: none;
+          // display: none;
           position: absolute;
           top: 100%;
           left: 495px;
